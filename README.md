@@ -195,12 +195,12 @@ ESP32 Hardware Feedback
                  │
       ┌──────────┴──────────┐
       ▼                     ▼
-```
+
 
 Invoice Generation      ESP32 Hardware
 │
 LCD + LED + Buzzer
-
+```
 ---
 
 # 7. AI Detection Pipeline
