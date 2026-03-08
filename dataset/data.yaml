@@ -1,0 +1,8 @@
+train: C:/Users/sheha/Desktop/smart_cashier_local2/dataset/train/images
+val: C:/Users/sheha/Desktop/smart_cashier_local2/dataset/valid/images
+test: C:/Users/sheha/Desktop/smart_cashier_local2/dataset/test/images
+
+
+
+nc: 4
+names: ['Eastroc', 'Fawar', 'Noodles', 'Water']
