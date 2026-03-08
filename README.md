@@ -145,7 +145,7 @@ The image is processed by the AI backend which performs:
 # 5. System Architecture
 
 The system integrates **four major subsystems**.
-
+```
 Camera
 ↓
 Frontend Interface
@@ -159,7 +159,7 @@ Embedding Verification
 Invoice Generation
 ↓
 ESP32 Hardware Feedback
-
+```
 ---
 
 # 6. Complete Architecture Diagram
@@ -206,7 +206,7 @@ LCD + LED + Buzzer
 # 7. AI Detection Pipeline
 
 The AI pipeline contains **two stages**.
-
+```
 Camera Frame
 ↓
 Image Decoding
@@ -222,7 +222,7 @@ MobileNet Feature Extraction
 Cosine Similarity Comparison
 ↓
 Product Label Confirmation
-
+```
 This two-stage approach increases detection reliability.
 
 ---
@@ -289,7 +289,7 @@ Buzzer
 ---
 
 # 10. Project Folder Structure
-
+```
 smart_cashier_local2
 │
 ├── api
@@ -326,7 +326,7 @@ smart_cashier_local2
 ├── train_yolov8.py
 ├── requirements.txt
 └── yolov8n.pt
-
+```
 ---
 
 # 11. Backend System (api/main.py)
@@ -479,12 +479,12 @@ Anyone with this link can access the Smart Cashier system remotely.
 # 16. Dataset Structure
 
 The dataset used to train the model follows the YOLO format.
-
+```
 dataset
 ├── train
 ├── valid
 └── test
-
+```
 Each image has a corresponding annotation file containing bounding box coordinates.
 
 ---
