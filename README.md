@@ -30,17 +30,15 @@ The system demonstrates how **AI, Web Systems, and Embedded Hardware** can be in
 
 # 2. Problem Statement
 
-Traditional barcode checkout systems suffer from multiple limitations:
+Traditional barcode checkout systems suffer from multiple limitations.
 
 ### Slow Checkout
 
 Each product must be scanned individually.
 
-For example:
+Example:
 
-```
 20 products → 20 barcode scans
-```
 
 This increases customer waiting time.
 
@@ -110,9 +108,37 @@ The system automatically:
 
 ---
 
-## Hardware System
+## Hardware System (ESP32 Prototype)
 
 ![Hardware](docs/hardware_esp32_setup.png)
+
+---
+
+## Real Hardware Prototype (Physical Device)
+
+The following image shows the **actual physical prototype** of the Vision-Based Smart Cashier device.
+
+This device was built as a working demonstration of the smart cashier system operating in a real environment.
+
+The prototype includes:
+
+• ESP32 microcontroller
+• LCD screen for product information
+• Green LED indicator (successful recognition)
+• Red LED indicator (unknown product)
+• Buzzer for sound feedback
+• Camera mounted above the device for product capture
+
+The camera captures the product placed in front of the system.
+
+The image is processed by the AI backend which performs:
+
+1. Object detection using YOLOv8
+2. Product verification using feature embeddings
+3. Invoice generation
+4. Hardware feedback through ESP32
+
+![Real Hardware Device](docs/real_hardware_device.png)
 
 ---
 
@@ -120,61 +146,60 @@ The system automatically:
 
 The system integrates **four major subsystems**.
 
-```
 Camera
-   ↓
+↓
 Frontend Interface
-   ↓
+↓
 FastAPI Backend
-   ↓
+↓
 YOLOv8 Detection
-   ↓
+↓
 Embedding Verification
-   ↓
+↓
 Invoice Generation
-   ↓
+↓
 ESP32 Hardware Feedback
-```
 
 ---
 
 # 6. Complete Architecture Diagram
 
 ```
-            ┌─────────────────────────┐
-            │        Camera           │
-            └────────────┬────────────┘
-                         │
-                         ▼
-            ┌─────────────────────────┐
-            │     Web Frontend        │
-            │  HTML + JavaScript UI   │
-            └────────────┬────────────┘
-                         │
-                         ▼
-            ┌─────────────────────────┐
-            │        FastAPI          │
-            │     Backend Server      │
-            └────────────┬────────────┘
-                         │
-                         ▼
-            ┌─────────────────────────┐
-            │        YOLOv8           │
-            │   Object Detection AI   │
-            └────────────┬────────────┘
-                         │
-                         ▼
-            ┌─────────────────────────┐
-            │  MobileNet Embedding    │
-            │  Feature Verification   │
-            └────────────┬────────────┘
-                         │
-          ┌──────────────┴──────────────┐
-          ▼                             ▼
- Invoice Generation              ESP32 Hardware
-                                   │
-                        LCD + LED + Buzzer
+    ┌─────────────────────────┐
+    │        Camera           │
+    └────────────┬────────────┘
+                 │
+                 ▼
+    ┌─────────────────────────┐
+    │     Web Frontend        │
+    │  HTML + JavaScript UI   │
+    └────────────┬────────────┘
+                 │
+                 ▼
+    ┌─────────────────────────┐
+    │        FastAPI          │
+    │     Backend Server      │
+    └────────────┬────────────┘
+                 │
+                 ▼
+    ┌─────────────────────────┐
+    │        YOLOv8           │
+    │   Object Detection AI   │
+    └────────────┬────────────┘
+                 │
+                 ▼
+    ┌─────────────────────────┐
+    │  MobileNet Embedding    │
+    │  Feature Verification   │
+    └────────────┬────────────┘
+                 │
+      ┌──────────┴──────────┐
+      ▼                     ▼
 ```
+
+Invoice Generation      ESP32 Hardware
+│
+LCD + LED + Buzzer
 
 ---
 
@@ -182,23 +207,21 @@ ESP32 Hardware Feedback
 
 The AI pipeline contains **two stages**.
 
-```
 Camera Frame
-     ↓
+↓
 Image Decoding
-     ↓
+↓
 YOLOv8 Detection
-     ↓
+↓
 Bounding Box Extraction
-     ↓
+↓
 Product Crop
-     ↓
+↓
 MobileNet Feature Extraction
-     ↓
+↓
 Cosine Similarity Comparison
-     ↓
+↓
 Product Label Confirmation
-```
 
 This two-stage approach increases detection reliability.
 
@@ -210,9 +233,7 @@ The embedding verification step compares feature vectors using **Cosine Similari
 
 The similarity between two vectors is defined as:
 
-```
 similarity = (A · B) / (||A|| × ||B||)
-```
 
 Where:
 
@@ -221,16 +242,12 @@ Where:
 
 The result ranges between:
 
-```
 -1 → completely different
- 1 → identical
-```
+1 → identical
 
 The system accepts a product if:
 
-```
 similarity ≥ 0.88
-```
 
 ---
 
@@ -273,7 +290,6 @@ Buzzer
 
 # 10. Project Folder Structure
 
-```
 smart_cashier_local2
 │
 ├── api
@@ -290,7 +306,8 @@ smart_cashier_local2
 │   ├── system_interface2.png
 │   ├── object_detection.png
 │   ├── product_added.png
-│   └── hardware_esp32_setup.png
+│   ├── hardware_esp32_setup.png
+│   └── real_hardware_device.png
 │
 ├── frontend
 │   ├── index.html
@@ -303,12 +320,12 @@ smart_cashier_local2
 │
 ├── runs
 │
+├── tools
+│   └── cloudflared.exe
+│
 ├── train_yolov8.py
-│
 ├── requirements.txt
-│
 └── yolov8n.pt
-```
 
 ---
 
@@ -372,9 +389,7 @@ Detected products are highlighted with bounding boxes.
 
 Example:
 
-```
 Noodles (87%)
-```
 
 ---
 
@@ -398,15 +413,11 @@ Hardware components:
 
 Backend sends:
 
-```
 OK:ProductName:Price
-```
 
 Example:
 
-```
 OK:Noodles:150
-```
 
 Hardware response:
 
@@ -421,9 +432,7 @@ Hardware response:
 
 Backend sends:
 
-```
 ERR
-```
 
 Hardware response:
 
@@ -437,15 +446,11 @@ Hardware response:
 
 Start the backend server:
 
-```
 uvicorn api.main:app --host 0.0.0.0 --port 8000
-```
 
-Open the system in a browser:
+Open the system locally:
 
-```
 http://localhost:8000
-```
 
 Allow camera access.
 
@@ -455,40 +460,50 @@ Press **Enter** to confirm product addition.
 
 ---
 
-# 15. Dataset Structure
+# 15. Running the System Over the Internet
+
+To allow others to access the system remotely, the project uses **Cloudflare Tunnel**.
+
+Run this command in another terminal:
+
+.\tools\cloudflared.exe tunnel --url http://localhost:8000
+
+Cloudflare will generate a public URL such as:
+
+https://random-name.trycloudflare.com
+
+Anyone with this link can access the Smart Cashier system remotely.
+
+---
+
+# 16. Dataset Structure
 
 The dataset used to train the model follows the YOLO format.
 
-```
 dataset
- ├── train
- ├── valid
- └── test
-```
+├── train
+├── valid
+└── test
 
 Each image has a corresponding annotation file containing bounding box coordinates.
 
 ---
 
-# 16. Model Training
+# 17. Model Training
 
 The model was trained using YOLOv8.
 
 Training script:
 
-```
 train_yolov8.py
-```
 
 After training, the best model is saved as:
 
-```
 model/best.pt
-```
 
 ---
 
-# 17. Future Improvements
+# 18. Future Improvements
 
 Possible improvements include:
 
@@ -500,15 +515,17 @@ Possible improvements include:
 
 ---
 
-# 18. Conclusion
+# 19. Conclusion
 
-This project demonstrates the integration of **Artificial Intelligence, Web Technologies, and Embedded Systems** to create an intelligent retail checkout solution.
+This project demonstrates the integration of **Artificial Intelligence, Web Technologies, and Embedded Systems**.
 
 By replacing traditional barcode scanners with **vision-based product recognition**, the system enables faster, smarter, and more automated retail experiences.
 
 ---
 
 # Author
+
+Engineer **Raidan Al-khateeb**
 
 Artificial Intelligence Engineering Student
 
@@ -517,3 +534,4 @@ Focus Areas:
 Computer Vision
 Deep Learning
 Embedded AI Systems
+Smart Retail Technologies
