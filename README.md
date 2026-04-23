@@ -526,10 +526,11 @@ By replacing traditional barcode scanners with **vision-based product recognitio
 
 ---
 
-# Author
+# Authors
 
-Engineer **Raidan Al-khateeb**
-
+Engineers: **Raidan Al-khateeb**
+           **Mohammed Al-wosabi**
+           
 Artificial Intelligence Engineering Student
 
 Focus Areas:
